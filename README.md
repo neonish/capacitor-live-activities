@@ -23,7 +23,6 @@
 | ---------------------- | ------------------------------------- | --------------------------------- | ------------------------------------------------------------------ |
 | Luan Freitas (ludufre) | [ludufre](https://github.com/ludufre) | [@ludufre](https://x.com/ludufre) | [Luan Freitas](https://www.linkedin.com/in/luan-freitas-14341687/) |
 
-
 ## ✨ Features
 
 - 🏃‍♂️ **Easy Integration**: Simple installation with automatic configuration
@@ -42,16 +41,16 @@ Create beautiful Live Activities using a declarative JSON structure:
 ```typescript
 const result = await LiveActivities.startActivity({
   layout: {
-    type: "container",
-    properties: [{ direction: "vertical" }, { spacing: 12 }],
+    type: 'container',
+    properties: [{ direction: 'vertical' }, { spacing: 12 }],
     children: [
       {
-        type: "text",
-        properties: [{ text: "{{title}}" }, { fontSize: 18 }]
-      }
-    ]
+        type: 'text',
+        properties: [{ text: '{{title}}' }, { fontSize: 18 }],
+      },
+    ],
   },
-  data: { title: "Hello Live Activity!" }
+  data: { title: 'Hello Live Activity!' },
 });
 ```
 
@@ -77,10 +76,10 @@ npx cap sync
    - Click "Finish"
    - Choose `Don't Activate` when prompted
 
-<img src="docs/assets/target-1.png" width="400" />  
-<img src="docs/assets/target-2.png" width="400" />  
-<img src="docs/assets/target-3.png" />  
-<img src="docs/assets/target-4.png" />  
+<img src="docs/assets/target-1.png" width="400" />
+<img src="docs/assets/target-2.png" width="400" />
+<img src="docs/assets/target-3.png" />
+<img src="docs/assets/target-4.png" />
 
 3. **Convert to Group:**
    - Right-click on `LiveActivities` folder in Xcode
@@ -123,7 +122,7 @@ struct LiveActivitiesBundle: WidgetBundle {
         DynamicActivityWidget()
     }
 }
-``` 
+```
 
 ### 6. Add App Groups Capability
 
@@ -134,12 +133,12 @@ struct LiveActivitiesBundle: WidgetBundle {
    - Example: `group.com.example.myapp.liveactivities`
 5. **Repeat for Widget Extension target**
 
-<img src="docs/assets/capability-1.png" width="400" />  
-<img src="docs/assets/capability-2.png" width="400" />  
+<img src="docs/assets/capability-1.png" width="400" />
+<img src="docs/assets/capability-2.png" width="400" />
 
 ### 7. Basic Usage
 
-<img src="docs/assets/example.png" width="400" />  
+<img src="docs/assets/example.png" width="400" />
 
 ```typescript
 import { LiveActivities } from 'capacitor-live-activities';
@@ -215,16 +214,16 @@ const result = await LiveActivities.startActivity({
 await LiveActivities.updateActivity({
   activityId: result.activityId,
   data: {
-    title: "Updated content!"
-  }
+    title: 'Updated content!',
+  },
 });
 
 // End the activity
 await LiveActivities.endActivity({
   activityId: result.activityId,
   data: {
-    title: "Activity completed"
-  }
+    title: 'Activity completed',
+  },
 });
 ```
 
@@ -233,17 +232,18 @@ await LiveActivities.endActivity({
 This plugin includes a comprehensive example app with multiple Live Activity implementations:
 
 ### JSON Layout Examples
+
 - **Text Examples**: Typography, formatting, and styling
-- **Image Examples**: SF Symbols, sizing, and layouts  
+- **Image Examples**: SF Symbols, sizing, and layouts
 - **Timer Examples**: Countdown timers and time formatting
 - **Progress Examples**: Progress bars and completion tracking
 - **Container Examples**: Complex layouts with nested elements
 
 ### Real-World Examples
+
 - **Football Scoreboard**: Complete sports scoreboard with Dynamic Island
 - **Food Order Tracking**: Real-world delivery tracking example
 - **Crypto Tracker**: Bitcoin price tracking with charts
-
 
 ### Run the Example App
 
@@ -259,15 +259,18 @@ ionic cap run ios
 ### Common Issues
 
 1. **"No such module 'LiveActivitiesKit'"**
+
    - Ensure you added the Podfile target correctly
    - Run `npx cap sync` after adding the Podfile entry
 
 2. **Live Activities not appearing**
+
    - Check that `NSSupportsLiveActivities` is in Info.plist
    - Verify App Groups are configured for both targets
    - Ensure you're testing on iOS 16.2+ device
 
 3. **Dynamic Island not working**
+
    - Dynamic Island requires iPhone 14 Pro/Pro Max or newer
    - Test regular Live Activities first
 
