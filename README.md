@@ -89,12 +89,19 @@ npx cap sync
 
 ### 3. Configure Podfile
 
-Add the LiveActivitiesKit dependency to your `ios/App/Podfile`:
+1. **Add the LiveActivitiesKit dependency to your `ios/App/Podfile`:**
 
 ```ruby
 target 'LiveActivitiesExtension' do
   pod 'LiveActivitiesKit', :path => '../../node_modules/capacitor-live-activities'
 end
+```
+
+2. **Install Pods**
+
+```bash
+cd /ios/app
+pod install
 ```
 
 ### 4. Enable Live Activities
@@ -118,7 +125,8 @@ import LiveActivitiesKit
 @main
 struct LiveActivitiesBundle: WidgetBundle {
     var body: some Widget {
-        LiveActivities()
+        // Remove comment to enable homescreen widget (not customizable via capacitor)
+        //LiveActivities()
         DynamicActivityWidget()
     }
 }
@@ -207,6 +215,7 @@ const result = await LiveActivities.startActivity({
     systemActionForegroundColor: '#007AFF',
     widgetUrl: 'https://example.com',
     keyLineTint: '#007AFF',
+    backgroundTint: 'clear';
   },
 });
 
