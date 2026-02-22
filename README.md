@@ -248,10 +248,13 @@ This plugin includes a comprehensive example app with multiple Live Activity imp
 ### Run the Example App
 
 ```bash
+npm install
+npm run build
 cd example-app
-npm install # or pnpm install
-npx cap run ios
-ionic cap run ios
+npm install
+ionic build
+npx cap sync ios
+npx cap open ios
 ```
 
 ## 🛠️ Troubleshooting
