@@ -143,7 +143,7 @@ All elements in the JSON layout system support universal properties applied thro
   "properties": [
     { "backgroundColor": "#1C1C1E" },        // Solid color
     { "backgroundGradient": "linear" },      // Linear gradient
-    { "backgroundCapsule": true }            // Capsule-shaped background
+    { "backgroundCapsule": { "foregroundColor": "#ff00ff" } }            // Capsule-shaped background
   ]
 }
 ```
