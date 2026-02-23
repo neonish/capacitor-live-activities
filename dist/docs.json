@@ -324,7 +324,7 @@
       "docs": "Configuration options for starting a Live Activity",
       "types": [
         {
-          "text": "{\n  /** Layout configuration for the activity */\n  layout: ActivityLayout;\n  /** Dynamic Island layout configuration (optional) */\n  dynamicIslandLayout: DynamicIslandLayout;\n  /** Behavior configuration for the activity */\n  behavior: LiveActivitiesBehavior;\n  /** Dynamic data to be displayed in the activity */\n  data: Record<string, any>;\n  /** Date when the activity becomes stale (optional) */\n  staleDate?: number;\n  /** Relevance score for activity prioritization (optional) */\n  relevanceScore?: number;\n}",
+          "text": "{\n  /** Layout configuration for the activity */\n  layout: ActivityLayout;\n  /** Dynamic Island layout configuration (optional) */\n  dynamicIslandLayout?: DynamicIslandLayout | null;\n  /** Behavior configuration for the activity */\n  behavior: LiveActivitiesBehavior;\n  /** Dynamic data to be displayed in the activity */\n  data: Record<string, any>;\n  /** Date when the activity becomes stale (optional) */\n  staleDate?: number;\n  /** Relevance score for activity prioritization (optional) */\n  relevanceScore?: number;\n}",
           "complexTypes": [
             "ActivityLayout",
             "DynamicIslandLayout",

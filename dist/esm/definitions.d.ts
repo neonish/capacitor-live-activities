@@ -81,7 +81,7 @@ export type LiveActivitiesOptions = {
     /** Layout configuration for the activity */
     layout: ActivityLayout;
     /** Dynamic Island layout configuration (optional) */
-    dynamicIslandLayout: DynamicIslandLayout;
+    dynamicIslandLayout?: DynamicIslandLayout | null;
     /** Behavior configuration for the activity */
     behavior: LiveActivitiesBehavior;
     /** Dynamic data to be displayed in the activity */

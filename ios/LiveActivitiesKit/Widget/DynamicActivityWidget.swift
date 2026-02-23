@@ -34,7 +34,9 @@ public struct DynamicActivityWidget: Widget {
         } dynamicIsland: { context in
             let dynamicIslandLayout = context.attributes.dynamicIslandLayoutJSON
             
-            let parsedLayout = JSONLayoutParser.parseJsonCompressedIfNeeded(from: dynamicIslandLayout, as: DynamicIslandLayoutData.self) ?? DynamicIslandLayoutData(
+            let parsedLayout = dynamicIslandLayout.flatMap {
+                JSONLayoutParser.parseJsonCompressedIfNeeded(from: $0, as: DynamicIslandLayoutData.self)
+            } ?? DynamicIslandLayoutData(
                 expanded: nil,
                 compactLeading: nil,
                 compactTrailing: nil,
