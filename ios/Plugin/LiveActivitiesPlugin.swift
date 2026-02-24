@@ -230,23 +230,22 @@ public class LiveActivitiesPlugin: CAPPlugin, CAPBridgedPlugin {
         let staleDate = staleTimestamp.map { Date(timeIntervalSince1970: $0 / 1000) }  // JS timestamp em ms
         let relevanceScore = call.getDouble("relevanceScore") ?? 0
 
-        var activityId: String
+        Task {
+            do {
+                var activity: [String: String]
+                activity = try await LiveActivities.shared.startActivity(
+                    layout: finalLayoutString,
+                    dynamicIslandLayout: finalDynamicIslandString,
+                    behavior: finalBehaviorString,
+                    data: data,
+                    staleDate: staleDate,
+                    relevanceScore: relevanceScore
+                )
 
-        do {
-            activityId = try LiveActivities.shared.startActivity(
-                layout: finalLayoutString,
-                dynamicIslandLayout: finalDynamicIslandString,
-                behavior: finalBehaviorString,
-                data: data,
-                staleDate: staleDate,
-                relevanceScore: relevanceScore
-            )
-
-            call.resolve([
-                "activityId": activityId
-            ])
-        } catch {
-            call.reject("Failed to start activity: \(error.localizedDescription)")
+                call.resolve(activity)
+            } catch {
+                call.reject("Failed to start activity: \(error.localizedDescription)")
+            }
         }
     }
 

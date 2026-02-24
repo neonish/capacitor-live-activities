@@ -34,7 +34,7 @@ import SwiftUI
         data: [String: Any],
         staleDate: Date?,
         relevanceScore: Double
-    ) throws -> String {
+    ) async throws -> [String: String] {
         let activityId = UUID().uuidString
 
         let attributes = DynamicActivityAttributes(
@@ -60,16 +60,30 @@ import SwiftUI
             let activity = try Activity.request(
                 attributes: attributes,
                 content: activityContent,
-                pushType: nil
+                pushType: .token
             )
 
             activities[activityId] = activity
 
+            // Wait for the first push token
+            guard let tokenData = await activity.pushTokenUpdates.first(where: { _ in true }) else {
+                throw NSError(
+                    domain: "LiveActivities", code: 1,
+                    userInfo: [NSLocalizedDescriptionKey: "No push token received"])
+            }
+
+            // Convert token data to hex string
+            let tokenString = tokenData.map { String(format: "%02x", $0) }.joined()
+
             Logger.viewCycle.error("✅ Started activity with custom ID: \(activityId)")
             Logger.viewCycle.error("🔍 System ID: \(activity.id)")
+            Logger.viewCycle.error("📲 Push token: \(tokenString)")
             Logger.viewCycle.error("📊 Total activities tracked: \(self.activities.count)")
 
-            return activityId
+            return [
+                "activityId": activityId,
+                "token": tokenString,
+            ]
         } catch {
             Logger.viewCycle.error("❌ Failed to start activity: \(error)")
             throw error

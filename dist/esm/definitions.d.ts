@@ -15,6 +15,7 @@ export interface LiveActivitiesPlugin {
      */
     startActivity(options: LiveActivitiesOptions): Promise<{
         activityId: string;
+        token: string;
     }>;
     /**
      * Update an existing Live Activity

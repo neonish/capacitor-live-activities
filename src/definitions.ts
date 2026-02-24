@@ -14,7 +14,7 @@ export interface LiveActivitiesPlugin {
    * @param options Configuration options for the Live Activity
    * @returns Promise with the generated activity ID
    */
-  startActivity(options: LiveActivitiesOptions): Promise<{ activityId: string }>;
+  startActivity(options: LiveActivitiesOptions): Promise<{ activityId: string; token: string }>;
 
   /**
    * Update an existing Live Activity
