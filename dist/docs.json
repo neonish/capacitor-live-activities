@@ -7,7 +7,7 @@
     "methods": [
       {
         "name": "startActivity",
-        "signature": "(options: LiveActivitiesOptions) => Promise<{ activityId: string; token: string; }>",
+        "signature": "(options: LiveActivitiesOptions) => Promise<{ activityId: string; token?: string; }>",
         "parameters": [
           {
             "name": "options",
@@ -15,7 +15,7 @@
             "type": "LiveActivitiesOptions"
           }
         ],
-        "returns": "Promise<{ activityId: string; token: string; }>",
+        "returns": "Promise<{ activityId: string; token?: string | undefined; }>",
         "tags": [
           {
             "name": "param",
@@ -23,7 +23,7 @@
           },
           {
             "name": "returns",
-            "text": "Promise with the generated activity ID"
+            "text": "Promise with the generated activity ID and optional token"
           }
         ],
         "docs": "Start a new Live Activity",

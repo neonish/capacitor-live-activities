@@ -11,11 +11,11 @@ export interface LiveActivitiesPlugin {
     /**
      * Start a new Live Activity
      * @param options Configuration options for the Live Activity
-     * @returns Promise with the generated activity ID
+     * @returns Promise with the generated activity ID and optional token
      */
     startActivity(options: LiveActivitiesOptions): Promise<{
         activityId: string;
-        token: string;
+        token?: string;
     }>;
     /**
      * Update an existing Live Activity

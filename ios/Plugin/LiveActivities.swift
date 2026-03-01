@@ -34,7 +34,7 @@ import SwiftUI
         data: [String: Any],
         staleDate: Date?,
         relevanceScore: Double
-    ) async throws -> [String: String] {
+    ) async throws -> [String: Any] {
         let activityId = UUID().uuidString
 
         let attributes = DynamicActivityAttributes(
@@ -57,33 +57,46 @@ import SwiftUI
         )
 
         do {
-            let activity = try Activity.request(
-                attributes: attributes,
-                content: activityContent,
-                pushType: .token
-            )
+            let activity: Activity<DynamicActivityAttributes>
+            do {
+                activity = try Activity.request(
+                    attributes: attributes,
+                    content: activityContent,
+                    pushType: .token
+                )
+            } catch {
+                Logger.viewCycle.error(
+                    "⚠️ Push token capability not available, starting without push support: \(error)"
+                )
+                activity = try Activity.request(
+                    attributes: attributes,
+                    content: activityContent,
+                    pushType: nil
+                )
+            }
 
             activities[activityId] = activity
 
-            // Wait for the first push token
-            guard let tokenData = await activity.pushTokenUpdates.first(where: { _ in true }) else {
-                throw NSError(
-                    domain: "LiveActivities", code: 1,
-                    userInfo: [NSLocalizedDescriptionKey: "No push token received"])
+            // Wait for the first push token (optional)
+            var tokenString: String? = nil
+            if let tokenData = await activity.pushTokenUpdates.first(where: { _ in true }) {
+                tokenString = tokenData.map { String(format: "%02x", $0) }.joined()
             }
-
-            // Convert token data to hex string
-            let tokenString = tokenData.map { String(format: "%02x", $0) }.joined()
 
             Logger.viewCycle.error("✅ Started activity with custom ID: \(activityId)")
             Logger.viewCycle.error("🔍 System ID: \(activity.id)")
-            Logger.viewCycle.error("📲 Push token: \(tokenString)")
+            if let tokenString = tokenString {
+                Logger.viewCycle.error("📲 Push token: \(tokenString)")
+            } else {
+                Logger.viewCycle.error("📲 Push token: Not available")
+            }
             Logger.viewCycle.error("📊 Total activities tracked: \(self.activities.count)")
 
-            return [
-                "activityId": activityId,
-                "token": tokenString,
-            ]
+            var result: [String: Any] = ["activityId": activityId]
+            if let tokenString = tokenString {
+                result["token"] = tokenString
+            }
+            return result
         } catch {
             Logger.viewCycle.error("❌ Failed to start activity: \(error)")
             throw error

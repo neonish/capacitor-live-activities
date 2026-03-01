@@ -232,7 +232,7 @@ public class LiveActivitiesPlugin: CAPPlugin, CAPBridgedPlugin {
 
         Task {
             do {
-                var activity: [String: String]
+                var activity: [String: Any]
                 activity = try await LiveActivities.shared.startActivity(
                     layout: finalLayoutString,
                     dynamicIslandLayout: finalDynamicIslandString,
